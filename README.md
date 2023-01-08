@@ -1,14 +1,14 @@
-# CATcovery
-Web app to better discover your cat origin
-
-by: Dominik Misior, Maciej Oldakowski, Gustaw Ignut, Michał Sadownik 
-
+# CATcovery  
+Web app to better discover your cat origin  
+  
+by: Dominik Misior, Maciej Oldakowski, Gustaw Ignut, Michał Sadownik   
+  
 Description:
-Predykcja (co aplikacje będzie przewidywać?): Rasę kota, kolor oczu, umaszczenie
-Krótkie uzasadnienie funkcjonalności aplikacji: Aplikacja będzie rozpoznawać rasę kota ze zdjęcia i przekierowywać użytkownika na stronę z informacjami na temat tej rasy. 
-Model ML (sieci neuronowe czy inny? czy zostanie wytrenowany na potrzeby aplikacji czy ściągnięty?):  Sieci neuronowe, wytrenowane za pomocą: 
-https://colab.research.google.com/drive/1pb7sc8zzobUy3jb51aI8IT8qdlwOzu9k?usp=sharing
-https://drive.google.com/drive/folders/1tNFLzgAkrcUNoE_UxpEEbTxQwWlRzgGa?usp=sharing
+Predykcja (co aplikacje będzie przewidywać?): Rasę kota, kolor oczu, umaszczenie  
+Krótkie uzasadnienie funkcjonalności aplikacji: Aplikacja będzie rozpoznawać rasę kota ze zdjęcia i przekierowywać użytkownika na stronę z informacjami na temat tej rasy.   
+Model ML (sieci neuronowe czy inny? czy zostanie wytrenowany na potrzeby aplikacji czy ściągnięty?):  Sieci neuronowe, wytrenowane za pomocą:   
+https://colab.research.google.com/drive/1pb7sc8zzobUy3jb51aI8IT8qdlwOzu9k?usp=sharing  
+https://drive.google.com/drive/folders/1tNFLzgAkrcUNoE_UxpEEbTxQwWlRzgGa?usp=sharing  
 
 Co dodane:
 1. Sieć rozpoznawającą rasę kota i otoczkę do tego - Zrobione  
