@@ -1,3 +1,5 @@
 streamlit==1.16.0
+ipywidgets
+names
 pandas==1.5.2
 fastai==2.7.10

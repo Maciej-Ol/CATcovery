@@ -1,5 +1,8 @@
 import streamlit as st
 import pandas as pd
+import pickle
+from fileinput import filename
+import names
 from io import StringIO
 from PIL import Image
 from PIL import ImageDraw
@@ -11,15 +14,16 @@ temp = pathlib.PosixPath
 pathlib.PosixPath = pathlib.WindowsPath
 from io import BytesIO
 
+model_filename = "model.pkl"
 #miejsce na wgranie modeli
-#model=load_learner("model.pkl")
+cat_model = pickle.load(open(model_filename, 'rb'))
 
 @st.cache
 def get_cat_to_dowland(picture,cat_name,cat_age):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
     #Bierze obraz i z dołu dodaje imię i wiek
     cat_picture = Image.open(picture)
-    bottom=100
+    bottom=20
     width, height = cat_picture.size
     print(height)
     new_height = height + bottom
@@ -37,10 +41,10 @@ def get_cat_to_dowland(picture,cat_name,cat_age):
     
 
 def main():
-    if 'recent' not in st.session_state:
-        st.session_state['recent'] = 0
-    if 'second_stage' not in st.session_state:
-        st.session_state['second_stage'] = False
+    if 'name' not in st.session_state:
+        st.session_state['name'] = ''
+    # if 'second_stage' not in st.session_state:
+    #     st.session_state['second_stage'] = False
 
     overview = st.container()
     uploadfile = st.container()
@@ -55,40 +59,44 @@ def main():
         'Take or upload a picture',
         ["Upload","Take"])
         if option=="Take":
-            cat_picture = st.camera_input("Take a picture")
+            st.camera_input("Take a picture", key= "cat_picture")
         else:
-            cat_picture = st.file_uploader("Choose a file", type = ['jpg','png'])
-        st.session_state['second_stage']=st.button('DISC(CAT)COVER!!!')
+            st.file_uploader("Choose a file", type = ['jpg','png'], key= "cat_picture")
+        #st.session_state['second_stage']=st.button('DISC(CAT)COVER!!!')
 
     with uploadfile:
         #zabawa ze zdjęciem, które już jest
-        if st.session_state['second_stage']:
-            #Spinner na razienie działa
+            #Spinner na razie nie działa
             #st.spinner(text="In progress...")
             #time.sleep(5)
-            if cat_picture is not None:
-                bytes_data = cat_picture.getvalue()
-                #Miejsce na predykcje różnych modeli co do zdjęcia
-                #predictions = model.predict(bytes_data)
-                #score = round(predictions[2].numpy()[0]*100,3)
-
-                #Wrzucanie różnych metryk
-                left2.metric(label="Rasa", value=12) #predictions[0]
-                right2.metric(label="Prawdopodobieństwo", value=145) #score
-                foto.image(bytes_data, caption='Uploaded Cat.', use_column_width=True)
-                st.balloons()
-            else:
-                st.error("Najpierw załaduj zdjęcie", icon="🚨")
+        if st.session_state['cat_picture'] is not None:
+            bytes_data = st.session_state['cat_picture'].getvalue()
+            #Miejsce na predykcje różnych modeli co do zdjęcia
+            predictions = cat_model.predict(bytes_data)
+            score = round(predictions[2].numpy()[0]*100,3)
+        
+            #Wrzucanie różnych metryk
+            left2.metric(label="Rasa", value=predictions[0]) #predictions[0]
+            right2.metric(label="Prawdopodobieństwo", value=score) #score
+            foto.image(bytes_data, caption='Uploaded Cat.', use_column_width=True)
+            #st.balloons()
+        else:
+            st.error("Najpierw załaduj zdjęcie", icon="🚨")
     #Tu się coś wywala, bo jak zmieni się name albo age, to znika wszystko z uploadfile i cat_rest
     #Możliwe, że trzeba dodać cat_picture do session_state, albo pozmieniać coś bardziej
     with cat_rest:
-        if st.session_state['second_stage'] and cat_picture is not None:
-            name = st.text_input('Your cat name', 'Rudy')
+        if st.session_state['cat_picture'] is not None: 
+            if st.button('Generate'):
+                st.session_state['name'] = generated_name = names.get_first_name()
+                st.write(st.session_state['name'])
+            text_name = st.text_input('Your cat name')
+            if text_name is not None and text_name !='':
+                st.session_state['name'] = text_name
             age = st.slider('Your cat age', 0, 20, 1)
             st.write("More information about your cat:")
-            st.write(name," to piękne imię dla kota!")
+            st.write(st.session_state['name']," to piękne imię dla kota!")
             st.write("Age: ", age)
-            get_cat_to_dowland(cat_picture,name,age)
+            get_cat_to_dowland(st.session_state['cat_picture'],st.session_state['name'],age)
             with open("cat_picture.jpg","rb") as file:
                 btn=st.download_button(
                     label="Download your cat",
