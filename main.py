@@ -19,18 +19,18 @@ model_filename = "model.pkl"
 cat_model = pickle.load(open(model_filename, 'rb'))
 
 @st.cache
-def get_cat_to_dowland(picture,cat_name,cat_age):
+def get_cat_to_dowland(picture,cat_name,cat_age,rasa, score):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
     #Bierze obraz i z dołu dodaje imię i wiek
     cat_picture = Image.open(picture)
-    bottom=20
+    bottom=40
     width, height = cat_picture.size
-    print(height)
+    #print(height)
     new_height = height + bottom
     result=Image.new(cat_picture.mode, (cat_picture.size[0], new_height), (255, 255, 255))
     result.paste(cat_picture, (0, 0))
     I1 = ImageDraw.Draw(result)
-    I1.text((20, height+20), f"Name: {cat_name}, Age: {cat_age}", fill=(0, 0, 0))
+    I1.text((20, height+15), f"Name: {cat_name}, Age: {cat_age}, Rase: {rasa}, Score: {score}", fill=(0, 0, 0))
     result.save("cat_picture.jpg")
     #with BytesIO() as f:
     #    result.save(f, format='JPEG')
@@ -73,8 +73,8 @@ def main():
             bytes_data = st.session_state['cat_picture'].getvalue()
             #Miejsce na predykcje różnych modeli co do zdjęcia
             predictions = cat_model.predict(bytes_data)
-            score = round(predictions[2].numpy()[0]*100,3)
-        
+            st.session_state['score'] = score = round(predictions[2].numpy()[0]*100,3)
+            st.session_state['pred'] = predictions[0]
             #Wrzucanie różnych metryk
             left2.metric(label="Rasa", value=predictions[0]) #predictions[0]
             right2.metric(label="Prawdopodobieństwo", value=score) #score
@@ -82,21 +82,19 @@ def main():
             #st.balloons()
         else:
             st.error("Najpierw załaduj zdjęcie", icon="🚨")
-    #Tu się coś wywala, bo jak zmieni się name albo age, to znika wszystko z uploadfile i cat_rest
-    #Możliwe, że trzeba dodać cat_picture do session_state, albo pozmieniać coś bardziej
     with cat_rest:
         if st.session_state['cat_picture'] is not None: 
-            if st.button('Generate'):
+            if st.button('Generate a name'):
                 st.session_state['name'] = generated_name = names.get_first_name()
-                st.write(st.session_state['name'])
-            text_name = st.text_input('Your cat name')
+            text_name = st.text_input('Your cat name', st.session_state['name'])
             if text_name is not None and text_name !='':
                 st.session_state['name'] = text_name
             age = st.slider('Your cat age', 0, 20, 1)
             st.write("More information about your cat:")
-            st.write(st.session_state['name']," to piękne imię dla kota!")
+            st.write(st.session_state['name']," it's a fun name for a cat!")
             st.write("Age: ", age)
-            get_cat_to_dowland(st.session_state['cat_picture'],st.session_state['name'],age)
+            get_cat_to_dowland(st.session_state['cat_picture'],st.session_state['name'],
+                               age,predictions[0],score)
             with open("cat_picture.jpg","rb") as file:
                 btn=st.download_button(
                     label="Download your cat",

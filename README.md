@@ -10,13 +10,15 @@ Model ML (sieci neuronowe czy inny? czy zostanie wytrenowany na potrzeby aplikac
 https://colab.research.google.com/drive/1pb7sc8zzobUy3jb51aI8IT8qdlwOzu9k?usp=sharing
 https://drive.google.com/drive/folders/1tNFLzgAkrcUNoE_UxpEEbTxQwWlRzgGa?usp=sharing
 
-Co dodać:
+Co dodane:
 1. Sieć rozpoznawającą rasę kota i otoczkę do tego - Zrobione  
 2. Naprawić to, że zdjęcie znika, przy wpisaniu imieniu kotu lub zmianie jego wieku - Zrobione 
 3. Dodanie generatora imion - Zrobione, dodano przycisk do generowania imienia, zostawiono text_input do ręcznego wpisania
+Jak w przyszłości można rozwinąć:
 4. Dodanie sieci wykrywającej kolor oczu
 5. Dodanie tego wszystkiego do pobieranego obrazka
 6. Dodanie przewidywanej długości życia na podstawie wieku i rasy
+7. Dodanie Polskich znaków w imionach (ostrzeganie, że nie można ich wykrywać przy wpisaniu)
 
 To run:
 
