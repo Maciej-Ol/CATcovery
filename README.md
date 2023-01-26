@@ -10,7 +10,8 @@ What is more you can add a cat name and age. Based on that in the future you wil
 To run:
 ```
 pip install -r requirements.txt
-
+```
+```
 streamlit run main.py
 ```
 Roadmap:
