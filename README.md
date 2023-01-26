@@ -16,8 +16,6 @@ Roadmap:
 1. A network that recognizes the breed of the cat and the environment for that - Done. 
 2. Fix the fact that the photo disappears, when typing the name of the cat or changing its age - Done. 
 3. Add name generator, add button to generate name, left text_input for manual entry - Done.
-
-To develop in the future:
 4. Recognizing a cat's coat color
 5. Giving a list of information about this cat race
 6. Adding it all to the downloaded image
