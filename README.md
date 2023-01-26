@@ -8,10 +8,11 @@ You can predict your cat race and get the probability of it, based on a photo.
 What is more you can add a cat name and age. Based on that in the future you will be able to get to know your cat better.
 
 To run:
+```
+pip install -r requirements.txt
 
-1. pip install -r requirements.txt
-2. streamlit run main.py
-
+streamlit run main.py
+```
 Roadmap:
 1. A network that recognizes the breed of the cat and the environment for that - Done. 
 2. Fix the fact that the photo disappears, when typing the name of the cat or changing its age - Done. 
