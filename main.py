@@ -1,18 +1,11 @@
 import streamlit as st
-import pandas as pd
 import pickle
-from fileinput import filename
 import names
-from io import StringIO
 from PIL import Image
 from PIL import ImageDraw
-import fastai
 from fastai.vision.all import *
 from fastai.vision.widgets import *
 import pathlib
-temp = pathlib.PosixPath
-pathlib.PosixPath = pathlib.WindowsPath
-from io import BytesIO
 
 model_filename = "model.pkl"
 #miejsce na wgranie modeli
@@ -25,19 +18,12 @@ def get_cat_to_dowland(picture,cat_name,cat_age,rasa, score):
     cat_picture = Image.open(picture)
     bottom=40
     width, height = cat_picture.size
-    #print(height)
     new_height = height + bottom
     result=Image.new(cat_picture.mode, (cat_picture.size[0], new_height), (255, 255, 255))
     result.paste(cat_picture, (0, 0))
     I1 = ImageDraw.Draw(result)
     I1.text((20, height+15), f"Name: {cat_name}, Age: {cat_age}, Rase: {rasa}, Score: {score}", fill=(0, 0, 0))
     result.save("cat_picture.jpg")
-    #with BytesIO() as f:
-    #    result.save(f, format='JPEG')
-    #    f.seek(0)
-    #    ima_jpg = Image.open(f)
-    #    ima_jpg.load()
-    #return ima_jpg
     
 
 def main():
