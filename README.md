@@ -15,7 +15,7 @@ pip install -r requirements.txt
 streamlit run main.py
 ```
 App is also availble on Streamlit:
-[Try the cat app](https://maciej-ol-catcovery-main-ob331h.streamlit.app/)
+[Try the cat app!](https://maciej-ol-catcovery-main-ob331h.streamlit.app/)
 
 
 Roadmap:
