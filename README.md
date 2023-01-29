@@ -1,5 +1,5 @@
 # CATcovery  
-Web app to better discover your cat origin using neural networks and streamlit
+Web app to better discover your cat origin using neural networks and Streamlit.
   
 by: Dominik Misior, Maciej Ołdakowski
   
@@ -14,6 +14,8 @@ pip install -r requirements.txt
 ```
 streamlit run main.py
 ```
+App is also availble on Streamlit:
+[Try the cat app](https://maciej-ol-catcovery-main-ob331h.streamlit.app/)
 Roadmap:
 1. A network that recognizes the breed of the cat and the environment for that - Done. 
 2. Fix the fact that the photo disappears, when typing the name of the cat or changing its age - Done. 
